@@ -6,26 +6,26 @@ import inspect
 from ssqueezepy import ssq_stft, ssq_cwt
 
 class STFT_complexnn(nn.Module):
-    def __init__(self, out_channel=6, dropout_rate=0.2):
+    def __init__(self, out_channel=5, dropout_rate=0.2):
         super(STFT_complexnn, self).__init__()
         self.dropout_rate = dropout_rate
         self.conv1 = nn.Sequential(
-            cConv2d(1, 8, kernel_size=3, stride=1, padding=(1, 1)),
-            cBatchNorm2d(8),
+            cConv2d(2, 4, kernel_size=3, stride=1, padding=(1, 1)),
+            cBatchNorm2d(4),
             cLeakyRelu(),
             cAvgPool2d(kernel_size=(2, 2), stride=(2, 2))  # 使用自定义池化
         )
 
         self.conv2 = nn.Sequential(
-            cConv2d(8, 16, kernel_size=3, stride=1, padding=(1, 1)),
-            cBatchNorm2d(16),
+            cConv2d(4, 8, kernel_size=3, stride=1, padding=(1, 1)),
+            cBatchNorm2d(8),
             cLeakyRelu(),
             cAvgPool2d(kernel_size=(2, 2), stride=(2, 2))  # 使用自定义池化
         )
 
         # 全连接层，添加 Dropout 层
         self.fc1 = nn.Sequential(
-            cLinear(39936, 512),
+            cLinear(16384, 512),
             cLeakyRelu(),
             cDropout(p=self.dropout_rate)
         )
@@ -54,4 +54,3 @@ class STFT_complexnn(nn.Module):
         return x
 
 
-# print(inspect.getsource(ssq_stft))

@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="5da30313-f5ba-403a-bd74-7cea8c25eb4b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/complex_SST.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CNN2d.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/complexNNstft.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/complex_CNN.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_complex_stft.py" afterDir="false" />
+    <list default="true" id="5da30313-f5ba-403a-bd74-7cea8c25eb4b" name="Changes" comment="model">
+      <change afterPath="$PROJECT_DIR$/complexNNstft_shipears.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/complexNNstft.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_complex_stft.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_complex_stft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft_shipears.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,9 +26,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
-}]]></component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;ddqqq00&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/ddqqq00/stft.git&quot;,
+    &quot;accountId&quot;: &quot;d38fdb59-68e1-4824-88d2-5d26cf27fe22&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 4
+}</component>
   <component name="ProjectId" id="32Ermoq8hGRBfJbiZwsUgeJUc35" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <ConfirmationsSetting value="2" id="Add" />
@@ -40,18 +51,45 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Python.train_complex_stft.executor": "Run",
+    "Python.train_complex_stft_shipears.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
+    "last_opened_file_path": "D:/PyCharm/complex_SST",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Python.train_complex_stft">
+    <configuration name="train_complex_stft" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="complex_SST" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train_complex_stft.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train_complex_stft_shipears" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="complex_SST" />
       <option name="ENV_FILES" value="" />
@@ -77,6 +115,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.train_complex_stft" />
         <item itemvalue="Python.train_complex_stft_shipears" />
       </list>
     </recent_temporary>
@@ -97,8 +136,20 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1756996733523</updated>
-      <workItem from="1756996734623" duration="316000" />
+      <workItem from="1756996734623" duration="1231000" />
+      <workItem from="1757227254958" duration="21000" />
+      <workItem from="1757511233326" duration="1247000" />
+      <workItem from="1757922002289" duration="7000000" />
     </task>
+    <task id="LOCAL-00001" summary="model">
+      <option name="closed" value="true" />
+      <created>1756997477487</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1756997477487</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -114,5 +165,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="model" />
+    <option name="LAST_COMMIT_MESSAGE" value="model" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft.coverage" NAME="train_complex_stft Coverage Results" MODIFIED="1757927637426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft_shipears.coverage" NAME="train_complex_stft_shipears Coverage Results" MODIFIED="1757922403405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

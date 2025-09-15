@@ -1,4 +1,6 @@
 import os
+import random
+
 import librosa
 import numpy as np
 import torch.nn as nn
@@ -25,16 +27,16 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Audio Classification using STFT features")
 
     # 添加需要的参数
-    parser.add_argument('--data_path', type=str, default=r"D:\PyCharm\complex_STFT_SST\watkins_0.5s", help='路径至数据集')
+    parser.add_argument('--data_path', type=str, default=r"D:\PyCharm\underwater-data\watkins_1s", help='路径至数据集')
     parser.add_argument('--batch_size', type=int, default=32, help='批量大小')
     parser.add_argument('--lr', type=float, default=0.0001, help='学习率')
     parser.add_argument('--weight_decay', type=float, default=1e-3, help='权重衰减系数')
     parser.add_argument('--num_epochs', type=int, default=50, help='训练的轮数')
     parser.add_argument('--model', type=str, choices=['CNN2d', 'STFT_complexnn'], default='STFT_complexnn', help='选择模型')
-    parser.add_argument('--segment_duration', type=int, default=0.5, help='音频片段时长（秒）')
+    parser.add_argument('--segment_duration', type=int, default=1, help='音频片段时长（秒）')
     parser.add_argument('--n_segments', type=int, default=4, help='分段数')
     parser.add_argument('--sr', type=int, default=40000, help='音频采样率')
-    parser.add_argument('--top_k_classes', type=int, default=5, help='选择样本数最多的前k个类别')
+    parser.add_argument('--top_k_classes', type=int, default=6, help='选择样本数最多的前k个类别')
 
     args = parser.parse_args()
     return args
@@ -67,11 +69,11 @@ class FocalLoss(nn.Module):
 # Padding方法
 def padding1s(y, sr):
     duration = librosa.get_duration(y=y, sr=sr)
-    if duration < 0.5:
+    if duration < 1:
         padding_length = int((1 - duration) * sr)
         y_padded = np.pad(y, (0, padding_length), mode='constant')
-    elif duration > 0.5:
-        y_padded = y[:int(0.5 * sr)]
+    elif duration > 1:
+        y_padded = y[:int(1 * sr)]
     else:
         y_padded = y
     return y_padded
@@ -132,9 +134,18 @@ def features_extractor(filename):
     # max_magnitude = np.max(np.abs(stft_result))
     # stft_normalized = stft_result / max_magnitude
 
-    # 计算同步压缩STFT
-    # stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='boxcar')
-
+    # # 计算同步压缩STFT
+    stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='hann')
+    #
+    # # 分离幅度和相位
+    # magnitude = np.abs(stft_ssq)
+    # phase = np.angle(stft_ssq)
+    #
+    # # 对幅度进行归一化
+    # magnitude_normalized = magnitude / np.max(magnitude)  # 归一化到[0, 1]区间
+    #
+    # # 重构STFT：归一化后的幅度与原相位相乘
+    # stft_reconstructed = magnitude_normalized * np.exp(1j * phase)
 
     return stft_result
 
@@ -196,6 +207,18 @@ class complexstftDataset(Dataset):
 
 # 获取音频文件路径
 category_paths = get_audio_paths_and_labels(args.data_path, top_k_classes=args.top_k_classes)
+
+# 固定随机种子
+def set_seed(seed):
+    random.seed(seed)  # Python内置的random模块
+    np.random.seed(seed)  # NumPy随机模块
+    torch.manual_seed(seed)  # PyTorch CPU随机数种子
+    torch.cuda.manual_seed_all(seed)  # PyTorch GPU随机数种子
+    torch.backends.cudnn.deterministic = True  # 设置为True以确保可重复性
+    torch.backends.cudnn.benchmark = False  # 禁用cudnn的自动优化
+
+# 设定随机种子
+set_seed(41)
 
 # 获取所有文件路径和标签
 all_files = []

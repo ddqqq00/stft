@@ -17,7 +17,7 @@ from torch.optim.lr_scheduler import StepLR
 from Complex_CNN import STFT_complex
 from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from CNN2d import CNN2d
-from complexNNstft import STFT_complexnn
+from complexNNstft_shipears import STFT_complexnn
 
 
 # 设置ArgumentParser以支持命令行参数
