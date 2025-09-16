@@ -10,7 +10,7 @@ class STFT_complexnn(nn.Module):
         super(STFT_complexnn, self).__init__()
         self.dropout_rate = dropout_rate
         self.conv1 = nn.Sequential(
-            cConv2d(2, 4, kernel_size=3, stride=1, padding=(1, 1)),
+            cConv2d(1, 4, kernel_size=3, stride=1, padding=(1, 1)),
             cBatchNorm2d(4),
             cLeakyRelu(),
             cAvgPool2d(kernel_size=(2, 2), stride=(2, 2))  # 使用自定义池化

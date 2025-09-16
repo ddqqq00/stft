@@ -134,10 +134,10 @@ def features_extractor(filename):
     # 计算同步压缩STFT
     stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='boxcar')
 
-    combined = np.stack([stft_result, stft_ssq], axis=0)
+    # combined = np.stack([stft_result, stft_ssq], axis=0)
 
 
-    return combined
+    return stft_ssq
 
 
 # 数据集类
@@ -165,7 +165,7 @@ class complexstftDataset(Dataset):
         stft = features_extractor(file_path)
         # stft_tensor = torch.tensor(stft, dtype=torch.float32)
         stft_tensor = torch.tensor(stft, dtype=torch.complex64)
-        # stft_tensor = stft_tensor.unsqueeze(0)
+        stft_tensor = stft_tensor.unsqueeze(0)
         return stft_tensor, label
 
 
