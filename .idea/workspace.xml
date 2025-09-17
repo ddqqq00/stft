@@ -5,9 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5da30313-f5ba-403a-bd74-7cea8c25eb4b" name="Changes" comment="model">
-      <change afterPath="$PROJECT_DIR$/complexNNstft_shipears.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/complexNNstft.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CNN2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/complexNNstft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft_shipears.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_complex_stft.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_complex_stft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft_shipears.py" afterDir="false" />
     </list>
@@ -49,24 +49,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Python.train_complex_stft.executor": "Run",
-    "Python.train_complex_stft_shipears.executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/PyCharm/complex_SST",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Python.train_complex_stft.executor&quot;: &quot;Run&quot;,
+    &quot;Python.train_complex_stft_shipears.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/PyCharm/complex_SST&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;org.jetbrains.plugins.github.ui.GithubSettingsConfigurable&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
-  <component name="RunManager" selected="Python.train_complex_stft">
+}</component>
+  <component name="RunManager" selected="Python.train_complex_stft_shipears">
     <configuration name="train_complex_stft" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="complex_SST" />
       <option name="ENV_FILES" value="" />
@@ -115,8 +115,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train_complex_stft" />
         <item itemvalue="Python.train_complex_stft_shipears" />
+        <item itemvalue="Python.train_complex_stft" />
       </list>
     </recent_temporary>
   </component>
@@ -139,7 +139,10 @@
       <workItem from="1756996734623" duration="1231000" />
       <workItem from="1757227254958" duration="21000" />
       <workItem from="1757511233326" duration="1247000" />
-      <workItem from="1757922002289" duration="7000000" />
+      <workItem from="1757922002289" duration="7640000" />
+      <workItem from="1758006877823" duration="5464000" />
+      <workItem from="1758029048732" duration="826000" />
+      <workItem from="1758089687198" duration="15836000" />
     </task>
     <task id="LOCAL-00001" summary="model">
       <option name="closed" value="true" />
@@ -149,7 +152,23 @@
       <option name="project" value="LOCAL" />
       <updated>1756997477487</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="model">
+      <option name="closed" value="true" />
+      <created>1757934849600</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1757934849600</updated>
+    </task>
+    <task id="LOCAL-00003" summary="model">
+      <option name="closed" value="true" />
+      <created>1758028290939</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1758028290939</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,7 +190,7 @@
     <option name="LAST_COMMIT_MESSAGE" value="model" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft.coverage" NAME="train_complex_stft Coverage Results" MODIFIED="1757927637426" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft_shipears.coverage" NAME="train_complex_stft_shipears Coverage Results" MODIFIED="1757922403405" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft.coverage" NAME="train_complex_stft Coverage Results" MODIFIED="1758097080873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft_shipears.coverage" NAME="train_complex_stft_shipears Coverage Results" MODIFIED="1758112521341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

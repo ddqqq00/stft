@@ -32,7 +32,7 @@ def parse_args():
     parser.add_argument('--lr', type=float, default=0.0001, help='学习率')
     parser.add_argument('--weight_decay', type=float, default=1e-3, help='权重衰减系数')
     parser.add_argument('--num_epochs', type=int, default=50, help='训练的轮数')
-    parser.add_argument('--model', type=str, choices=['CNN2d', 'STFT_complexnn'], default='STFT_complexnn', help='选择模型')
+    parser.add_argument('--model', type=str, choices=['CNN2d', 'STFT_complexnn'], default='CNN2d', help='选择模型')
     parser.add_argument('--segment_duration', type=int, default=1, help='音频片段时长（秒）')
     parser.add_argument('--n_segments', type=int, default=4, help='分段数')
     parser.add_argument('--sr', type=int, default=40000, help='音频采样率')
@@ -138,7 +138,7 @@ def features_extractor(filename):
     stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='hann')
     #
     # # 分离幅度和相位
-    # magnitude = np.abs(stft_ssq)
+    magnitude = np.abs(stft_ssq)
     # phase = np.angle(stft_ssq)
     #
     # # 对幅度进行归一化
@@ -147,7 +147,7 @@ def features_extractor(filename):
     # # 重构STFT：归一化后的幅度与原相位相乘
     # stft_reconstructed = magnitude_normalized * np.exp(1j * phase)
 
-    return stft_result
+    return magnitude
 
 # # 特征提取
 # def features_extractor(filename):
@@ -199,8 +199,8 @@ class complexstftDataset(Dataset):
         label = self.label_encoder.transform([label])[0]
         label = torch.tensor(label, dtype=torch.long)
         stft = features_extractor(file_path)
-        # stft_tensor = torch.tensor(stft, dtype=torch.float32)
-        stft_tensor = torch.tensor(stft, dtype=torch.complex64)
+        stft_tensor = torch.tensor(stft, dtype=torch.float32)
+        # stft_tensor = torch.tensor(stft, dtype=torch.complex64)
         stft_tensor = stft_tensor.unsqueeze(0)
         return stft_tensor, label
 

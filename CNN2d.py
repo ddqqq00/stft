@@ -24,7 +24,7 @@ class CNN2d(nn.Module):
 
         # 全连接层，输入维度应基于前面的池化尺寸
         self.fc1 = nn.Sequential(
-            nn.Linear(9728, 256), # 39936 是池化层后的输出大小
+            nn.Linear(30720, 256), # 39936 是池化层后的输出大小
             nn.ReLU(),
             nn.Dropout(p=dropout_prob)  # Dropout层，防止过拟合
         )

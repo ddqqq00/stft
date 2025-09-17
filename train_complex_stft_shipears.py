@@ -33,7 +33,7 @@ def parse_args():
     parser.add_argument('--model', type=str, choices=['CNN2d', 'STFT_complexnn'], default='STFT_complexnn', help='选择模型')
     parser.add_argument('--segment_duration', type=int, default=2, help='音频片段时长（秒）')
     parser.add_argument('--n_segments', type=int, default=4, help='分段数')
-    parser.add_argument('--sr', type=int, default=8000, help='音频采样率')
+    parser.add_argument('--sr', type=int, default=7000, help='音频采样率')
     parser.add_argument('--top_k_classes', type=int, default=5, help='选择样本数最多的前k个类别')
 
     args = parser.parse_args()
@@ -132,7 +132,8 @@ def features_extractor(filename):
     # stft_normalized = stft_result / max_magnitude
 
     # 计算同步压缩STFT
-    stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='boxcar')
+    stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='hann')
+    # magnitude = np.abs(stft_ssq)
 
     # combined = np.stack([stft_result, stft_ssq], axis=0)
 

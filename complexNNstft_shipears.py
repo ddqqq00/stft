@@ -25,7 +25,7 @@ class STFT_complexnn(nn.Module):
 
         # 全连接层，添加 Dropout 层
         self.fc1 = nn.Sequential(
-            cLinear(16384, 512),
+            cLinear(14336, 512),
             cLeakyRelu(),
             cDropout(p=self.dropout_rate)
         )
