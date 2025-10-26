@@ -5,6 +5,7 @@ import torch.nn as nn
 import torch
 import seaborn as sns
 import argparse
+import random
 from sklearn.preprocessing import LabelEncoder
 from ssqueezepy import ssq_stft
 from torch.utils.data import Dataset, DataLoader
@@ -46,16 +47,18 @@ args = parse_args()
 
 # Focal Loss定义
 class FocalLoss(nn.Module):
-    def __init__(self, alpha=0.25, gamma=2, reduction='mean'):
+    def __init__(self, alpha=0.25, gamma=2, epsilon = 2, reduction='mean'):
         super(FocalLoss, self).__init__()
         self.alpha = alpha
         self.gamma = gamma
         self.reduction = reduction
+        self.epsilon = epsilon
 
     def forward(self, inputs, targets):
         BCE_loss = F.cross_entropy(inputs, targets, reduction='none')
         pt = torch.exp(-BCE_loss)
-        F_loss = self.alpha * (1 - pt) ** self.gamma * BCE_loss
+        # F_loss = self.alpha * (1 - pt) ** self.gamma * (BCE_loss + self.epsilon * (1 - pt))
+        F_loss = BCE_loss + self.epsilon * (1 - pt)
         if self.reduction == 'mean':
             return F_loss.mean()
         elif self.reduction == 'sum':
@@ -118,10 +121,42 @@ def get_audio_paths_and_labels(data_path, top_k_classes=None):
 #     magnitude, _ = librosa.magphase(stft_result)
 #     return magnitude
 
+def add_gaussian_noise(clean_audio, snr_db):
+    """
+    向纯净音频中添加指定信噪比的高斯白噪声。
+
+    参数:
+    - clean_audio (np.array): 纯净的一维音频信号。
+    - snr_db (float): 期望的信噪比（Signal-to-Noise Ratio），单位为分贝(dB)。
+                       如果设为 None，则不添加噪声，直接返回原音频。
+
+    返回:
+    - np.array: 添加了噪声的音频信号。
+    """
+    # 如果snr_db为None，则不添加噪声
+    if snr_db is None:
+        return clean_audio
+
+    # --- 计算信号功率 ---
+    signal_power = np.mean(clean_audio ** 2)
+
+    # --- 根据信噪比计算噪声功率 ---
+    snr_linear = 10 ** (snr_db / 10.0)
+    noise_power = signal_power / snr_linear
+
+    # --- 生成符合功率要求的高斯白噪声 ---
+    noise = np.random.normal(0, np.sqrt(noise_power), clean_audio.shape)
+
+    # --- 将噪声添加到原始信号中 ---
+    noisy_audio = clean_audio + noise
+
+    return noisy_audio.astype(np.float32)
+
 def features_extractor(filename):
+    SNR_DB = None
     audio, sr = librosa.load(filename, sr=args.sr)
     audio = (audio - np.mean(audio)) / np.std(audio)
-    # audio = audio / np.max(np.abs(audio))
+    audio = add_gaussian_noise(audio, SNR_DB)
     n_fft = 2048
     hop_length = 512
 
@@ -132,7 +167,7 @@ def features_extractor(filename):
     # stft_normalized = stft_result / max_magnitude
 
     # 计算同步压缩STFT
-    stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='hann')
+    stft_ssq, _, _, _ = ssq_stft(audio, fs=sr, n_fft=n_fft, hop_len=hop_length, window='boxcar')
     # magnitude = np.abs(stft_ssq)
 
     # combined = np.stack([stft_result, stft_ssq], axis=0)
@@ -173,6 +208,18 @@ class complexstftDataset(Dataset):
 # 获取音频文件路径
 category_paths = get_audio_paths_and_labels(args.data_path, top_k_classes=args.top_k_classes)
 
+# 固定随机种子
+def set_seed(seed):
+    random.seed(seed)  # Python内置的random模块
+    np.random.seed(seed)  # NumPy随机模块
+    torch.manual_seed(seed)  # PyTorch CPU随机数种子
+    torch.cuda.manual_seed_all(seed)  # PyTorch GPU随机数种子
+    torch.backends.cudnn.deterministic = True  # 设置为True以确保可重复性
+    torch.backends.cudnn.benchmark = False  # 禁用cudnn的自动优化
+
+# 设定随机种子 43 53 63
+set_seed(63)
+
 # 获取所有文件路径和标签
 all_files = []
 all_labels = []
@@ -212,14 +259,19 @@ scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
 
 
 # 计算 Specificity
-def calculate_specificity(y_true, y_pred, num_classes):
+def calculate_precision(y_true, y_pred, num_classes):
     cm = confusion_matrix(y_true, y_pred, labels=list(range(num_classes)))
-    specificity = []
+    precision_score = []
     for i in range(num_classes):
-        tn = cm.sum() - cm[i, :].sum() - cm[:, i].sum() + cm[i, i]
-        fp = cm[:, i].sum() - cm[i, i]
-        specificity.append(tn / (tn + fp) if (tn + fp) > 0 else 0)
-    return np.mean(specificity)
+        tp = cm[i, i]
+        fp = cm[:, i].sum() - tp
+        denominator = tp + fp
+        if denominator > 0:
+            precision_score.append(tp / denominator)
+        else:
+            precision_score.append(0)
+
+    return np.mean(precision_score)
 
 
 # 训练过程
@@ -270,10 +322,10 @@ for epoch in range(args.num_epochs):
 
     recall = recall_score(all_labels, all_predictions, average='weighted', zero_division=0)
     f1 = f1_score(all_labels, all_predictions, average='weighted')
-    specificity = calculate_specificity(all_labels, all_predictions, num_classes=output.size(1))
+    specificity = calculate_precision(all_labels, all_predictions, num_classes=output.size(1))
 
     print(
-        f"Epoch {epoch + 1} - Train: Recall={recall:.4f}, F1={f1:.4f}, Specificity={specificity:.4f}, Accuracy={100 * correct / total:.4f}")
+        f"Epoch {epoch + 1} - Train: Recall={recall:.4f}, F1={f1:.4f}, Precision={specificity:.4f}, Accuracy={100 * correct / total:.4f}")
 
     train_losses.append(running_loss / len(train_loader))
     train_accuracies.append(100 * correct / total)
@@ -312,10 +364,10 @@ for epoch in range(args.num_epochs):
 
     test_recall = recall_score(all_labels, all_predictions, average='weighted')
     test_f1 = f1_score(all_labels, all_predictions, average='weighted')
-    test_specificity = calculate_specificity(all_labels, all_predictions, num_classes=output.size(1))
+    test_specificity = calculate_precision(all_labels, all_predictions, num_classes=output.size(1))
 
     print(
-        f"Epoch {epoch + 1} - Test: Recall={test_recall:.4f}, F1={test_f1:.4f}, Specificity={test_specificity:.4f}, Accuracy={(100 * correct / total):.4f}")
+        f"Epoch {epoch + 1} - Test: Recall={test_recall:.4f}, F1={test_f1:.4f}, Precision={test_specificity:.4f}, Accuracy={(100 * correct / total):.4f}")
     test_losses.append(running_loss / len(test_loader))
     test_accuracies.append(100 * correct / total)
     test_recalls.append(test_recall)

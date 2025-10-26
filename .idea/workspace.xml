@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5da30313-f5ba-403a-bd74-7cea8c25eb4b" name="Changes" comment="model">
+      <change afterPath="$PROJECT_DIR$/CB_loss.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/robustness experiments.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CNN2d.py" beforeDir="false" afterPath="$PROJECT_DIR$/CNN2d.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/complexNNstft.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/complexNNstft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft_shipears.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_complex_stft.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/train_complex_stft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft_shipears.py" afterDir="false" />
@@ -51,12 +53,13 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;Python.robustness experiments.executor&quot;: &quot;Run&quot;,
     &quot;Python.train_complex_stft.executor&quot;: &quot;Run&quot;,
     &quot;Python.train_complex_stft_shipears.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/PyCharm/complex_SST&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/PyCharm/Recommendation-system-based-on-knowledge-graph-embedding-master&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -66,7 +69,30 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
-  <component name="RunManager" selected="Python.train_complex_stft_shipears">
+  <component name="RunManager" selected="Python.train_complex_stft">
+    <configuration name="robustness experiments" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="complex_SST" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/robustness experiments.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="train_complex_stft" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="complex_SST" />
       <option name="ENV_FILES" value="" />
@@ -115,8 +141,9 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.train_complex_stft_shipears" />
         <item itemvalue="Python.train_complex_stft" />
+        <item itemvalue="Python.robustness experiments" />
+        <item itemvalue="Python.train_complex_stft_shipears" />
       </list>
     </recent_temporary>
   </component>
@@ -142,7 +169,24 @@
       <workItem from="1757922002289" duration="7640000" />
       <workItem from="1758006877823" duration="5464000" />
       <workItem from="1758029048732" duration="826000" />
-      <workItem from="1758089687198" duration="15836000" />
+      <workItem from="1758089687198" duration="15974000" />
+      <workItem from="1758524627923" duration="5964000" />
+      <workItem from="1758774477691" duration="10000" />
+      <workItem from="1758783147742" duration="12543000" />
+      <workItem from="1758864537520" duration="15595000" />
+      <workItem from="1758961706119" duration="36000" />
+      <workItem from="1760344441595" duration="27000" />
+      <workItem from="1760623392562" duration="5473000" />
+      <workItem from="1760669618236" duration="16354000" />
+      <workItem from="1760758639458" duration="15713000" />
+      <workItem from="1760858087225" duration="3616000" />
+      <workItem from="1760876936368" duration="8000" />
+      <workItem from="1761036380253" duration="8195000" />
+      <workItem from="1761110794026" duration="16868000" />
+      <workItem from="1761188505636" duration="10167000" />
+      <workItem from="1761235298784" duration="1293000" />
+      <workItem from="1761283852260" duration="8003000" />
+      <workItem from="1761461791817" duration="13072000" />
     </task>
     <task id="LOCAL-00001" summary="model">
       <option name="closed" value="true" />
@@ -168,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1758028290939</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="model">
+      <option name="closed" value="true" />
+      <created>1758116566978</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1758116566978</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -190,7 +242,8 @@
     <option name="LAST_COMMIT_MESSAGE" value="model" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft.coverage" NAME="train_complex_stft Coverage Results" MODIFIED="1758097080873" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft_shipears.coverage" NAME="train_complex_stft_shipears Coverage Results" MODIFIED="1758112521341" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$robustness_experiments.coverage" NAME="robustness experiments Coverage Results" MODIFIED="1761466781732" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft.coverage" NAME="train_complex_stft Coverage Results" MODIFIED="1761471932025" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/complex_SST$train_complex_stft_shipears.coverage" NAME="train_complex_stft_shipears Coverage Results" MODIFIED="1761283871296" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
