@@ -6,7 +6,6 @@ import torch
 import seaborn as sns
 import argparse
 import random
-from sklearn.preprocessing import LabelEncoder
 from ssqueezepy import ssq_stft
 from torch.utils.data import Dataset, DataLoader
 import torch.nn.functional as F
@@ -15,7 +14,6 @@ import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import recall_score, f1_score, confusion_matrix
 from torch.optim.lr_scheduler import StepLR
-from Complex_CNN import STFT_complex
 from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from CNN2d import CNN2d
 from complexNNstft_shipears import STFT_complexnn

@@ -20,7 +20,7 @@ from Complex_CNN import STFT_complex
 from sklearn.model_selection import StratifiedKFold, StratifiedShuffleSplit
 from CNN2d import CNN2d
 from complexNNstft import STFT_complexnn
-from CB_loss import CBLoss
+
 
 
 # 设置ArgumentParser以支持命令行参数
@@ -179,7 +179,7 @@ def add_gaussian_noise(clean_audio, snr_db):
 def features_extractor(filename):
     SNR_DB = None
     audio, sr = librosa.load(filename, sr=args.sr)
-    # audio = padding1s(y=audio, sr=args.sr)
+    audio = padding1s(y=audio, sr=args.sr)
     audio = (audio - np.mean(audio)) / np.std(audio)
     audio = add_gaussian_noise(audio, SNR_DB)
     # audio = audio / np.max(np.abs(audio))
@@ -513,4 +513,3 @@ cbar.ax.tick_params(labelsize=cbar_fontsize)
 
 plt.tight_layout()  # 自动调整布局
 plt.show()
-
