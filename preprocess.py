@@ -10,7 +10,7 @@ from tqdm import tqdm
 
 try:
     from utilities import (
-        padding2s, extract_RMS, extract_mfcc, extract_Wavelet,
+        padding2s, extract_RMS, extract_mfcc_watkins, extract_Wavelet,
         extract_stpsd, extract_autocorr, extract_zero_crosings,
         extract_spectral_rolloff, extract_spectral_centroid
     )
@@ -25,8 +25,8 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Preprocess audio files into graph data for GAT training.")
     parser.add_argument('--source_dir', type=str, required=True, help='存放原始 .wav 文件的根目录')
     parser.add_argument('--dest_dir', type=str, required=True, help='用于保存处理后的 .pt 图数据文件的新目录')
-    parser.add_argument('--sr', type=int, default=7000, help='音频采样率')
-    parser.add_argument('--top_k_classes', type=int, default=5, help='选择样本数最多的前k个类别进行处理')
+    parser.add_argument('--sr', type=int, default=40000, help='音频采样率')
+    parser.add_argument('--top_k_classes', type=int, default=6, help='选择样本数最多的前k个类别进行处理')
     args = parser.parse_args()
     return args
 
@@ -66,17 +66,17 @@ def process_audio_file(file_path, sr):
     """
     # 1. 加载和预处理音频
     audio, _ = librosa.load(file_path, sr=sr)
-    audio = padding2s(audio, sr=sr, s=2)
+    audio = padding2s(audio, sr=sr, s=1)
 
     # 2. 特征提取
-    spectral_rolloff = extract_spectral_rolloff(audio, sr=sr, target_length=28)
-    zero_crossings = extract_zero_crosings(audio, target_length=28)
-    spectral_centroid = extract_spectral_centroid(audio, sr=sr, target_length=28)
-    RMS = extract_RMS(audio, target_length=28)
-    autocorr = extract_autocorr(audio, sr=sr, target_length=28)
-    stpsd = extract_stpsd(audio, n_components=28)
-    mfcc = extract_mfcc(audio, sr=sr, s=2)
-    wavelet = extract_Wavelet(audio, target_length=28)
+    spectral_rolloff = extract_spectral_rolloff(audio, sr=sr, target_length=79)
+    zero_crossings = extract_zero_crosings(audio, target_length=79)
+    spectral_centroid = extract_spectral_centroid(audio, sr=sr, target_length=79)
+    RMS = extract_RMS(audio, target_length=79)
+    autocorr = extract_autocorr(audio, sr=sr, target_length=79)
+    stpsd = extract_stpsd(audio, n_components=79)
+    mfcc = extract_mfcc_watkins(audio, sr=sr)
+    wavelet = extract_Wavelet(audio, target_length=79)
 
     # 3. 构建图 (使用 NetworkX)
     G = nx.Graph()
@@ -133,8 +133,8 @@ def process_audio_file(file_path, sr):
 
 def main():
     """主执行函数"""
-    source_dir = r"D:\PyCharm\underwater-data\shipsEar2s"
-    dest_dir = r"D:\PyCharm\underwater-data\processed_graphs"
+    source_dir = r"D:\PyCharm\underwater-data\watkins_1s"
+    dest_dir = r"D:\PyCharm\underwater-data\processed_graphs_watkins1s"
 
     print("=" * 50)
     print("开始进行音频数据预处理")
@@ -157,7 +157,7 @@ def main():
     for file_path in tqdm(all_files, desc="Processing files"):
         try:
             # 处理单个文件
-            graph_data = process_audio_file(file_path, sr=7000)
+            graph_data = process_audio_file(file_path, sr=40000)
 
             # 构建保存路径，保持原始的类别文件夹结构
             class_name = os.path.basename(os.path.dirname(file_path))

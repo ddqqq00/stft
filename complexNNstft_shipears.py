@@ -110,7 +110,7 @@ class STFT_complexnn(nn.Module):
             cConv2d(1, 4, kernel_size=3, stride=1, padding=(1, 1)),
             cBatchNorm2d(4),
             cLeakyRelu(),
-            ComplexCBAM(in_channels=4),
+            #ComplexCBAM(in_channels=4),
             #ComplexSpatialAttention(),
             #ComplexChannelAttention(in_channels=4),
             cAvgPool2d(kernel_size=(2, 2), stride=(2, 2))  # 使用自定义池化
@@ -120,7 +120,7 @@ class STFT_complexnn(nn.Module):
             cConv2d(4, 8, kernel_size=3, stride=1, padding=(1, 1)),
             cBatchNorm2d(8),
             cLeakyRelu(),
-            ComplexCBAM(in_channels=8),
+            #ComplexCBAM(in_channels=8),
             #ComplexSpatialAttention(),
             #ComplexChannelAttention(in_channels=8),
             cAvgPool2d(kernel_size=(2, 2), stride=(2, 2))  # 使用自定义池化

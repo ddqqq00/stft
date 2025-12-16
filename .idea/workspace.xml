@@ -5,17 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5da30313-f5ba-403a-bd74-7cea8c25eb4b" name="Changes" comment="model">
-      <change afterPath="$PROJECT_DIR$/CVCNNGATconcat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/GAT.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/preprocess.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/train_GAT_shipears.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/traincomplexNNGAT-concat.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/complexNNstft.py" beforeDir="false" afterPath="$PROJECT_DIR$/complexNNstft.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_complex_stft.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/train_complex_stft_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_complex_stft_shipears.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CVCNNGATconcat.py" beforeDir="false" afterPath="$PROJECT_DIR$/CVCNNGATconcat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/GAT.py" beforeDir="false" afterPath="$PROJECT_DIR$/GAT.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/preprocess.py" beforeDir="false" afterPath="$PROJECT_DIR$/preprocess.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/train_GAT_shipears.py" beforeDir="false" afterPath="$PROJECT_DIR$/train_GAT_shipears.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utilities.py" beforeDir="false" afterPath="$PROJECT_DIR$/utilities.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -251,6 +247,12 @@
       <workItem from="1761553564706" duration="5414000" />
       <workItem from="1761717869143" duration="17131000" />
       <workItem from="1761802874760" duration="5086000" />
+      <workItem from="1762178649219" duration="51000" />
+      <workItem from="1762739416773" duration="2000" />
+      <workItem from="1762924804709" duration="46000" />
+      <workItem from="1765011027213" duration="2090000" />
+      <workItem from="1765082150997" duration="2384000" />
+      <workItem from="1765174637821" duration="13000" />
     </task>
     <task id="LOCAL-00001" summary="model">
       <option name="closed" value="true" />
@@ -292,7 +294,15 @@
       <option name="project" value="LOCAL" />
       <updated>1761481275603</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="model">
+      <option name="closed" value="true" />
+      <created>1762178684541</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762178684541</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">

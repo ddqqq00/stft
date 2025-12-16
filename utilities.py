@@ -50,7 +50,7 @@ def extract_mfcc(y, sr, s, n_mfcc=13):
         mfcc_mean = np.mean(mfcc, axis=1)
 
         # 3. 在末尾补一个0，得到 (14,) 的向量
-        mfcc_padded = np.pad(mfcc_mean, (0, 1), mode='constant')
+        mfcc_padded = np.pad(mfcc_mean, (0, 66), mode='constant')
         processed_vectors.append(mfcc_padded)
 
     # 4. 拼接两个处理后的 (14,) 向量，得到 (28,) 的最终向量
@@ -58,6 +58,17 @@ def extract_mfcc(y, sr, s, n_mfcc=13):
 
     return final_vector
 
+def extract_mfcc_watkins(y, sr, n_mfcc=13):
+    # 1. 计算MFCC
+    mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=n_mfcc)
+
+    # 2. 在时间轴上取平均，得到 (13,) 的向量
+    mfcc_mean = np.mean(mfcc, axis=1)
+
+    # 3. 在末尾补66个0，得到 (79,) 的向量
+    mfcc_padded = np.pad(mfcc_mean, (0, 66), mode='constant')
+
+    return mfcc_padded
 
 # 计算谱滚降点的函数
 def extract_spectral_rolloff(y, sr, target_length):

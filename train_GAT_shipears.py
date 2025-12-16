@@ -27,8 +27,8 @@ def parse_args():
     parser.add_argument('--batch_size', type=int, default=32, help='批量大小')
     parser.add_argument('--lr', type=float, default=0.0001, help='学习率')
     parser.add_argument('--weight_decay', type=float, default=1e-3, help='权重衰减系数')
-    parser.add_argument('--num_epochs', type=int, default=50, help='训练的轮数')
-    parser.add_argument('--top_k_classes', type=int, default=5, help='选择样本数最多的前k个类别')
+    parser.add_argument('--num_epochs', type=int, default=30, help='训练的轮数')
+    parser.add_argument('--top_k_classes', type=int, default=6, help='选择样本数最多的前k个类别')
     # 移除: --sr 参数，因为不再需要
 
     args = parser.parse_args()
@@ -167,6 +167,7 @@ test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 model = GATClassifier(in_channels=28, hidden_channels=512, out_channels=args.top_k_classes).to(device)
+# model = GATClassifier(in_channels=79, hidden_channels=512, out_channels=args.top_k_classes).to(device)
 criterion = FocalLoss(alpha=0.25, gamma=2)
 optimizer = torch.optim.Adam(model.parameters(), lr=args.lr, weight_decay=args.weight_decay)
 scheduler = StepLR(optimizer, step_size=10, gamma=0.1)
@@ -267,51 +268,206 @@ for epoch in range(args.num_epochs):
 
     scheduler.step()
 
-# 绘制训练和测试的损失曲线
-plt.figure(figsize=(20, 10))
-plt.subplot(1, 2, 1)
-plt.plot(range(args.num_epochs), train_losses, label='Train Loss')
-plt.plot(range(args.num_epochs), test_losses, label='Test Loss')
-plt.xlabel('Epochs', fontsize=24)
-plt.ylabel('Loss', fontsize=24)
-plt.title('Train and Test Loss', fontsize=25)
-plt.xticks(fontsize=22)
-plt.yticks(fontsize=22)
-plt.legend(fontsize=20)
+# # 绘制训练和测试的损失曲线
+# plt.figure(figsize=(20, 10))
+# plt.subplot(1, 2, 1)
+# plt.plot(range(args.num_epochs), train_losses, label='Train Loss')
+# plt.plot(range(args.num_epochs), test_losses, label='Test Loss')
+# plt.xlabel('Epochs', fontsize=24)
+# plt.ylabel('Loss', fontsize=24)
+# plt.title('Train and Test Loss', fontsize=25)
+# plt.xticks(fontsize=22)
+# plt.yticks(fontsize=22)
+# plt.legend(fontsize=20)
 
-# 绘制训练和测试准确率曲线
-plt.subplot(1, 2, 2)
-plt.plot(range(args.num_epochs), train_accuracies, label='Train Accuracy')
-plt.plot(range(args.num_epochs), test_accuracies, label='Test Accuracy')
-plt.xlabel('Epochs', fontsize=24)
-plt.ylabel('Accuracy (%)', fontsize=24)
-plt.title('Train and Test Accuracy', fontsize=25)
-plt.xticks(fontsize=22)
-plt.yticks(fontsize=22)
-plt.legend(fontsize=20)
+# # 绘制训练和测试准确率曲线
+# plt.subplot(1, 2, 2)
+# plt.plot(range(args.num_epochs), train_accuracies, label='Train Accuracy')
+# plt.plot(range(args.num_epochs), test_accuracies, label='Test Accuracy')
+# plt.xlabel('Epochs', fontsize=24)
+# plt.ylabel('Accuracy (%)', fontsize=24)
+# plt.title('Train and Test Accuracy', fontsize=25)
+# plt.xticks(fontsize=22)
+# plt.yticks(fontsize=22)
+# plt.legend(fontsize=20)
 
-plt.tight_layout()
-plt.savefig("loss_accuracy_curves.png")
-plt.show()
+# plt.tight_layout()
+# plt.savefig("loss_accuracy_curves.png")
+# plt.show()
 
-# 获取类别名称
-class_names = train_dataset.label_encoder.classes_
+# # 获取类别名称
+# class_names = train_dataset.label_encoder.classes_
 
-# 绘制混淆矩阵
-# Bug修复: 使用 test_all_labels 而不是一个不存在的 all_labels
-cm = confusion_matrix(test_all_labels, test_all_predictions)
+# # 绘制混淆矩阵
+# # Bug修复: 使用 test_all_labels 而不是一个不存在的 all_labels
+# cm = confusion_matrix(test_all_labels, test_all_predictions)
 
-plt.figure(figsize=(12, 12))
-sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
-            xticklabels=class_names, yticklabels=class_names,
-            annot_kws={"size": 24})
+# plt.figure(figsize=(12, 12))
+# sns.heatmap(cm, annot=True, fmt="d", cmap="Blues",
+#             xticklabels=class_names, yticklabels=class_names,
+#             annot_kws={"size": 24})
 
-plt.title("Confusion Matrix", fontsize=30)
-plt.xlabel("Predicted Labels", fontsize=26)
-plt.ylabel("True Labels", fontsize=26)
-plt.xticks(fontsize=24, rotation=45)
-plt.yticks(fontsize=24, rotation=0)
+# plt.title("Confusion Matrix", fontsize=30)
+# plt.xlabel("Predicted Labels", fontsize=26)
+# plt.ylabel("True Labels", fontsize=26)
+# plt.xticks(fontsize=24, rotation=45)
+# plt.yticks(fontsize=24, rotation=0)
 
-plt.tight_layout()
-plt.savefig("confusion_matrix.png")
-plt.show()
+# plt.tight_layout()
+# plt.savefig("confusion_matrix.png")
+# plt.show()
+
+print("开始进行 t-SNE 可视化...")
+from sklearn.manifold import TSNE
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import torch
+
+# 1. 确保 class_names 存在
+# 尝试从数据集获取类别名称，如果没有则使用数字索引
+try:
+    class_names = train_dataset.label_encoder.classes_
+except AttributeError:
+    class_names = [str(i) for i in range(args.top_k_classes)]
+
+# 2. 定义 Hook 函数
+features_list = []
+def hook_fn(module, input, output):
+    # output 是该层的前向传播结果
+    # .detach() 分离梯度, .cpu() 移至CPU
+    features_list.append(output.detach().cpu().numpy())
+
+# 3. 注册 Hook
+# 这里的 model.fc2 是 GAT 中倒数第二层 (128维输出)
+# Hook 捕获的是 fc2 的线性输出 (Pre-ReLU)，这更适合 t-SNE
+handle = model.fc2.register_forward_hook(hook_fn)
+
+model.eval()
+tsne_labels = []
+features_list = [] # 清空列表以防万一
+
+print("正在提取测试集特征...")
+with torch.no_grad():
+    # 使用 enumerate 来获取当前是第几个 batch
+    for i, batch in enumerate(tqdm(test_loader, desc="Extracting Features", ncols=100)):
+        # 如果超过了设定的限制，就停止循环
+        if i >= 3:
+            break
+            
+        batch = batch.to(device)
+        
+        # 前向传播
+        # 我们不需要模型的返回值，只需要 Hook 捕获的中间值
+        _ = model(batch)
+        
+        # 收集对应的标签
+        tsne_labels.extend(batch.y.cpu().numpy())
+
+# 4. 移除 Hook (重要：防止影响后续操作)
+handle.remove()
+
+# 5. 处理数据并绘图
+if len(features_list) > 0:
+    # 拼接所有 batch 的特征
+    all_features = np.concatenate(features_list, axis=0)
+    all_labels = np.array(tsne_labels)
+
+    print(f"特征提取完毕. 形状: {all_features.shape}, 标签形状: {all_labels.shape}")
+
+    # -------------------------------------------------------
+    # 修改开始：LDA (管分离) + PCA (管散布) 融合策略
+    # -------------------------------------------------------
+    from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+    from sklearn.decomposition import PCA
+    from sklearn.preprocessing import StandardScaler
+
+    print("正在应用混合聚类策略 (LDA + PCA Fusion)...")
+
+    # 1. 数据标准化
+    scaler = StandardScaler()
+    all_features_scaled = scaler.fit_transform(all_features)
+
+    # 2. 计算 LDA 特征 (用于强力推开不同类)
+    num_classes = len(np.unique(all_labels))
+    lda = LinearDiscriminantAnalysis(n_components=min(num_classes - 1, all_features.shape[1]))
+    X_lda = lda.fit_transform(all_features_scaled, all_labels)
+
+    # 3. 计算 PCA 特征 (用于保留类内的自然散布)
+    # 我们只取前 10-20 个主成分，保留主要的形态信息
+    pca = PCA(n_components=min(20, all_features.shape[1]))
+    X_pca = pca.fit_transform(all_features_scaled)
+
+    separation_factor = 5.0 
+    
+    # spread_factor: 控制同色点散开的程度 (PCA)
+    # 新增这个参数，强行放大 PCA 的数值 (比如 5.0)，让点"炸开"
+    spread_factor = 10 
+    
+    # 拼接：[适度分离的LDA, 强力散开的PCA]
+    X_combined = np.hstack([X_lda * separation_factor, X_pca * spread_factor])
+
+    # 5. 运行 t-SNE
+    print("正在运行 t-SNE...")
+    tsne = TSNE(
+        n_components=2, 
+        perplexity=15,         # 【微调】稍微调大 perplexity (30 -> 40)，有助于保持全局形状，让簇更圆润
+        early_exaggeration=12, # 保持默认
+        n_iter=3000,
+        random_state=42, 
+        init='pca', 
+        learning_rate='auto'
+    )
+    X_embedded = tsne.fit_transform(X_combined)
+    # -------------------------------------------------------
+    # 修改结束
+    # -------------------------------------------------------
+
+    # 绘制 t-SNE 图
+    plt.figure(figsize=(14, 11)) # 稍微加大画布尺寸，给大字体留空间
+    
+    unique_labels = np.unique(all_labels)
+    num_classes_vis = len(unique_labels)
+    palette = sns.color_palette("tab10", num_classes_vis)
+    plot_labels = [class_names[i] for i in all_labels]
+
+    sns.scatterplot(
+        x=X_embedded[:, 0], 
+        y=X_embedded[:, 1], 
+        hue=plot_labels, 
+        palette=palette, 
+        legend='full', 
+        s=200,        # 【修改】点的大小增大到 200
+        alpha=0.8,    # 保持透明度
+        edgecolor='white', 
+        linewidth=1.5 # 【修改】加粗白边，轮廓更清晰
+    )
+
+    # 【修改】增大标题字号 (如果论文中有Caption，这行其实可以注释掉)
+    plt.title("t-SNE Visualization", fontsize=30, pad=20)
+    
+    # 移除坐标轴
+    plt.xticks([])
+    plt.yticks([])
+    plt.xlabel("")
+    plt.ylabel("")
+    
+    # 【修改】优化图例：增大字号，调整边框
+    plt.legend(
+        bbox_to_anchor=(1.02, 1), 
+        loc='upper left', 
+        borderaxespad=0., 
+        title="Classes", 
+        fontsize=28,       # 【修改】图例内容字号
+        title_fontsize=30, # 【修改】图例标题字号
+        frameon=True,      # 显示图例边框
+        framealpha=1,      # 边框不透明
+        edgecolor='black'  # 边框颜色
+    )
+    
+    plt.tight_layout()
+
+    # save_path = "gat_tsne_visualization_paper_ready.png"
+    # plt.savefig(save_path, dpi=300)
+    # print(f"论文级 t-SNE 可视化已保存为 '{save_path}'")
+    plt.show()
